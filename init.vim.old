@@ -1,0 +1,277 @@
+
+""""""""""""""""""""""""
+"""TO KEEP AT THE TOP"""
+""""""""""""""""""""""""
+" Do not try to be vi compatible
+set nocompatible
+
+"""""""""""""
+"""PLUGINS"""
+"""""""""""""
+
+" Auto-install vim-plug
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" vim-plug 
+call plug#begin('~/.config/nvim/autoload/plugins')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf', {'do': {-> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+
+" GUI enhancements
+Plug 'itchyny/lightline.vim'
+Plug 'chriskempson/base16-vim'
+
+" Syntactic language support
+Plug 'rust-lang/rust.vim'
+Plug 'preservim/vim-markdown'
+Plug 'dag/vim-fish'
+Plug 'cespare/vim-toml'
+Plug 'stephpy/vim-yaml'
+
+" Git helpers
+Plug 'tpope/vim-fugitive'
+
+call plug#end()
+
+"---fzf
+" Adjust window size
+let g:fzf_layout = {'window': {'width': 0.8,'height': 0.8}}
+" Use top-down layout
+let $FZF_DEFAULT_OPTS = '--reverse'
+
+"---vim-markdown
+" Disable folding
+let g:vim_markdown_folding_disabled = 1
+" Disable automated list handling 
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 0
+
+"---rust
+" Auto-formatting with rustfmt
+let g:rustfmt_autosave = 1
+
+"---coc (config suggested by https://github.com/neoclide/coc.nvim)
+" TextEdit might fail if hidden is not set
+set hidden
+" Some servers have issues with bacup files
+set nobackup
+set nowritebackup
+" Give more space for displaying messages
+set cmdheight=2
+" Reduce updatetime for better user experience
+set updatetime=300
+" Don't pass messages to |ins-completion-menu|
+set shortmess+=c
+" Always show the signcolumn, otherwise it would shift the text each time diagnostics appear/become resolved
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+    " Recent vim can merge signcolumn and number comlumn into one
+    set signcolumn=number
+else
+    set signcolumn=yes
+endif
+" Use TAB for trigger completion with characters ahead and navigate
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+" Use <c-space> to trigger completion
+if has("nvim")
+    inoremap <silent><expr> <c-space> coc#refresh()
+else
+    inoremap <silent><expr> <c-@> coc#refresh()
+endif
+" Make <CR> auto-select the first completion item and notify coc.vim to format on enter 
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+    \: "<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+    if(index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else:
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+" Highlight the symbol and its references when holding the cursor
+autocmd CursorHold * silent call CocActionAsync('highlight')
+" Symbol renaming 
+nmap <leader>rn <Plug>(coc-rename)
+" Format selected code
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+augroup mygroup
+    autocmd!
+    " Setup formatexpr specified filetypes
+    autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+    " Update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region
+" Example: <leader>aap for curent paragrah
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer
+nmap <leader>ac <Plug>(coc-codeaction)"
+" Apply  AutoFix to problem on the current line
+nmap <leader>qf <Plug>(coc-fix-current)
+" Run the Code Lens action on the current line
+nmap <leader>cl <Plug>(coc-codelens-action)
+" Add :Format command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+" Add :Fold command to fold current buffer
+command! -nargs=0 Fold :call CocAction(('fold', <f-args>)
+" Add :OR command to organise imports of he current buffer
+command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+" Mappings for CocList
+" SHow commands
+nnoremap <silent><nowait> <leader><leader>c :<C-u>CocList commands<cr>
+" Disable Python 2 provider
+let g:loaded_python_provider = 0
+" Define path for Python 3 provider 
+let g:python3_host_prog = "/Users/harizo/.local/share/virtualenvs/dotfiles-5p23wSLv/bin/python"
+" Disable Ruby provider
+let g:loaded_ruby_provider = 0
+" Disable perl provider
+let g:loaded_perl_provider = 0
+
+"---lightline
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead',
+    \   'cocstatus': 'coc#status'
+    \ },
+    \ }
+
+""""""""""""""
+"""SETTINGS"""
+""""""""""""""
+
+" Open NERDTree automatically at vim startup if no file is specified
+autocmd StdinReadPre * let s:std_in=1
+
+" Turn on syntax highlighting
+syntax enable
+
+" For Rust plugin
+filetype plugin indent on
+
+" Show hybrid relative line number
+set number relativenumber
+
+" Show file stats
+set ruler
+
+" Blink cursor on error instead of beeping
+set visualbell
+
+" Encoding
+set encoding=utf-8
+
+" Whitespaces
+set wrap
+set formatoptions=tcqrn1
+set noshiftround
+
+" Indentation
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set smartindent
+set autoindent
+
+" Disable automatic comment insertion
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Cursor motion
+set backspace=indent,eol,start
+set matchpairs+=<:>
+
+" Rendering
+set ttyfast
+
+" Status bar
+set laststatus=2
+
+" Last line
+set showmode
+set showcmd
+
+" Search
+set smartcase
+set showmatch
+
+" Colorscheme and theme
+set t_Co=256
+set background=dark
+colorscheme base16-gruvbox-dark-hard
+if (has("@nvim"))
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+" Highlight current line
+set cursorline 
+
+
+""""""""""""""""
+""" MAPPINGS """
+""""""""""""""""
+
+" Set leader key
+let g:mapleader = ' '
+nnoremap <SPACE> <Nop>
+
+" Clear search highlights
+map <leader>c :noh<CR>
+
+" List buffers
+map <leader>; :Buffers<CR>
+
+" Directional keys to navigate through buffers
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
+
+" Easier buffer cycling
+nnoremap <leader><leader> <c-^>
+
+" Close buffer
+nnoremap <leader>w :bd<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+"""""""""""""""""""""""""""
+"""TO KEEP AT THE BOTTOM"""
+"""""""""""""""""""""""""""
+
+" Remove default mode displayer
+set noshowmode
