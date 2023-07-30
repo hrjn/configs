@@ -1,0 +1,55 @@
+{
+    // Editor
+    "editor.fontFamily": "JetBrains Mono, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    "editor.minimap.enabled": false,
+    "editor.renderWhitespace": "all",
+    "editor.linkedEditing": true,
+    "editor.occurrencesHighlight": false,
+    "editor.suggest.insertMode": "replace",
+    "editor.acceptSuggestionOnCommitCharacter": false,
+
+    // Files
+    "files.autoSave": "onFocusChange",
+    "files.defaultLanguage": "markdown",
+
+    // Explorer
+    "explorer.autoReveal": false,
+
+    // Workbenck
+    "workbench.colorTheme": "Catppuccin Latte",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.editor.enablePreview": false,
+
+    // Window
+    "window.commandCenter": true,
+
+    // Terminal
+    "terminal.integrated.defaultProfile.osx": "fish",
+    "terminal.integrated.fontFamily": "JetBrains Mono",
+
+    // Languages
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": false,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "isort.args": ["pprofile", "black"],
+    "ruff.organizeImports": false,
+
+    // Extensions
+    "gitlens.currentLine.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.hovers.currentLine.over": "line",
+
+    "latex-workshop.latex.autoBuild.run": "never",
+
+    // Misc.
+    "telemetry.telemetryLevel": "off",
+    "window.zoomLevel": -1,
+    "git.autofetch": true,
+
+}
