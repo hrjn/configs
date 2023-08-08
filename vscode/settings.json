@@ -18,7 +18,7 @@
     "explorer.autoReveal": false,
 
     // Workbenck
-    "workbench.colorTheme": "Catppuccin Latte",
+    "workbench.colorTheme": "Rosé Pine Dawn",
     "workbench.iconTheme": "material-icon-theme",
     "workbench.editor.enablePreview": false,
 
@@ -49,7 +49,6 @@
 
     // Misc.
     "telemetry.telemetryLevel": "off",
-    "window.zoomLevel": -1,
     "git.autofetch": true,
 
 }
