@@ -1,0 +1,50 @@
+[user]
+	name = Harizo Rajaona
+    email = harizo.rajaona@gmail.com
+
+[github]
+    user = hrjn
+
+[core]
+    editor = vi
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = red
+
+[alias]
+    # Pure laziness
+    c = commit
+    s = status
+    # Short version of status
+    st = status -sb 
+    # Detailed list of branches
+    branches = branch -vv
+    # Short version of log
+    slog = log --pretty=format:"%C(auto,yellow)%h%C(auto)%d\\ %C(auto,reset)%s\\ \\ [%C(auto,blue)%cn%C(auto,reset),\\ %C(auto,cyan)%ar%C(auto,reset)]"
+    # Graph version of log
+    glog = log --graph --pretty=format:"%C(auto,yellow)%h%C(auto)%d\\ %C(auto,reset)%s\\ \\ [%C(auto,blue)%an%C(auto,reset),\\ %C(auto,cyan)%ar%C(auto,reset)]"
+    # Uncommit :)
+    uncommit = reset HEAD^
+    # Show committers
+    authors = shortlog -sn
+
+
+[init]
+    defaultBranch = master
+
+[pull]
+    rebase = true
+
