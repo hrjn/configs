@@ -11,6 +11,7 @@ Repository to centralise configuration files for my development environment.
 | fish | WIP |
 | fzf | TODO |
 | git | WIP |
+| konsole | WIP |
 | iterm2 | OK |
 | nvim | TODO |
 | starship | TODO |
