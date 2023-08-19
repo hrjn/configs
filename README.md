@@ -5,6 +5,7 @@ Repository to centralise configuration files for my development environment.
 | Tool | Status |
 | --- | --- |
 | alacritty | WIP |
+| bat | OK |
 | btop | OK |
 | espanso | TODO |
 | firefox | OK |
